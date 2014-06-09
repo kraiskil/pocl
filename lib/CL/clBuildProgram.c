@@ -25,6 +25,7 @@
 #include "pocl_cl.h"
 #include "install-paths.h"
 #include <assert.h>
+#include <errno.h>
 #include <string.h>
 #include <unistd.h>
 #include <sys/stat.h>
@@ -272,7 +273,7 @@ CL_API_SUFFIX__VERSION_1_0
           MEM_ASSERT(count >= POCL_FILENAME_LENGTH, ERROR_CLEAN_PROGRAM);
 
           error = mkdir (device_tmpdir, S_IRWXU);
-          MEM_ASSERT(error, ERROR_CLEAN_PROGRAM);
+          MEM_ASSERT(error && errno != EEXIST, ERROR_CLEAN_PROGRAM);
 
           count = snprintf 
             (binary_file_name, POCL_FILENAME_LENGTH, "%s/%s", 
