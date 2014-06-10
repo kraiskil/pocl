@@ -64,9 +64,14 @@ int main(int argc, char **argv)
   err = clCreateKernelsInProgram(program, 0, NULL, &num_krn);
   assert(err == CL_SUCCESS);
   assert(num_krn == 2);
-
   err = clCreateKernelsInProgram(program, 2, kernels, NULL);
   assert(err == CL_SUCCESS);
+
+  err = clEnqueueTask(queue, kernels[0], 0, NULL, NULL); 
+  assert(err == CL_SUCCESS);
+  err = clEnqueueTask(queue, kernels[1], 0, NULL, NULL);
+  assert(err == CL_SUCCESS);
+  clFinish(queue);
 
   clReleaseProgram(program);
   free((void*)krn_src);

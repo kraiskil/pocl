@@ -287,6 +287,10 @@ CL_API_SUFFIX__VERSION_1_0
                   binary_file);
 
           fclose (binary_file);
+
+          program->llvm_irs[device_i] = 
+            pocl_llvm_parse_IR_buf (program->binaries[device_i],
+                                    program->binary_sizes[device_i]);
         }      
     }
 

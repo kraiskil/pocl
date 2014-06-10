@@ -1155,6 +1155,8 @@ pocl_llvm_get_kernel_names( cl_program program, const char **knames, unsigned ma
   // TODO: is it safe to assume every device (i.e. the index 0 here)
   // has the same set of programs & kernels?
   llvm::Module *mod = (llvm::Module *) program->llvm_irs[0];
+  if (mod==NULL)
+    return 0;
   llvm::NamedMDNode *md = mod->getNamedMetadata("opencl.kernels");
   assert(md);
 
@@ -1207,5 +1209,26 @@ pocl_llvm_codegen( cl_kernel kernel,
 
     return 0;
 }
+
+/* parse buffer 'data' as LLVM, return llvm::Module */
+void *
+pocl_llvm_parse_IR_buf (const char *data, int size)
+{
+    llvm::Module* rv;
+    SMDiagnostic Err;
+    StringRef datas(data, size);
+    MemoryBuffer *mbuf = MemoryBuffer::getMemBuffer(datas);
+
+    /* TODO: This should be in a initialization function somewhere. */
+    if (globalContext==NULL)
+        globalContext = new LLVMContext();
+
+    /* TODO assert this function returns NULL if input is not valid LLVM IR*/
+    /* TODO return error message, in case user wanted to pass SPIR, but we
+     * rejected it for some reason */
+    rv = llvm::ParseIR(mbuf, Err, *globalContext);
+    return rv;
+}
+
 /* vim: set ts=4 expandtab: */
 

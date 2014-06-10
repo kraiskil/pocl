@@ -99,6 +99,12 @@ int pocl_llvm_codegen ( cl_kernel kernel,
                         const char *infile,
                         const char *outfile);
 
+
+/* Parse buffer 'data' of given size as LLVM IR or LLVM BC.
+ * Return a llvm::Module* if successfull, NULL on error. */
+void *
+pocl_llvm_parse_IR_buf (const char *data, int size);
+
 #ifdef __cplusplus
 }
 #endif
