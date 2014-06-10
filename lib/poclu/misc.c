@@ -84,7 +84,7 @@ poclu_get_any_device( cl_context *context, cl_device_id *device, cl_command_queu
 }
 
 char *
-poclu_read_file(char *filename)
+poclu_read_file(char *filename, size_t* bytes_read)
 {
   FILE *file;
   long size;
@@ -104,6 +104,8 @@ poclu_read_file(char *filename)
   fread(src, size, 1, file);
   fclose(file);
   src[size]=0;
-
+  
+  if (bytes_read != NULL)
+    *bytes_read = (size_t)size;
   return src;
 }

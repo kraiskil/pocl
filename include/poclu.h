@@ -87,9 +87,12 @@ float
 poclu_cl_half_to_float(cl_half value);
 
 /* Read content of file to a malloc'd buffer, which is returned.
+ * Optionally, return number of bytes allocated.
+ * Returned buffer is NULL-terminated, and of size (bytes_read+1).
  * Return NULL on errors */
 char *
-poclu_read_file(char* filemane);
+poclu_read_file(char* filename, size_t* bytes_read);
+
 
 #ifdef __cplusplus
 }
