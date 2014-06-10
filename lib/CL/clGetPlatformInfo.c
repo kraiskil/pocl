@@ -77,9 +77,9 @@ POname(clGetPlatformInfo)(cl_platform_id   platform,
       // TODO: do we want to list all suppoted extensions *here*, or in some header?.
       // TODO: yes, it is better here: available through ICD Loader and headers can be the ones from Khronos
       #ifdef BUILD_ICD
-      POCL_RETURN_PLATFORM_INFO_STR("cl_khr_icd");
+      POCL_RETURN_PLATFORM_INFO_STR("cl_khr_icd cl_khr_spir");
       #else
-      POCL_RETURN_PLATFORM_INFO_STR("");
+      POCL_RETURN_PLATFORM_INFO_STR("cl_khr_spir");
       #endif
 
     case CL_PLATFORM_ICD_SUFFIX_KHR:
